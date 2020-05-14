@@ -50,6 +50,13 @@ public class TelaLogin extends javax.swing.JFrame {
                 TelaPrincipal principal = new TelaPrincipal();
                 
                 principal.setVisible(true);
+                
+                // Fechando a tela de login
+                this.dispose();
+                
+                // Fechando a conexao com o banco de dados
+                
+                conexao.close();
             }
             else {
                 lblNotFound.setVisible(true);
@@ -112,6 +119,17 @@ public class TelaLogin extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("X System - Login");
         setResizable(false);
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                formKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                formKeyTyped(evt);
+            }
+        });
 
         jLabel1.setText("Usuário");
 
@@ -151,7 +169,7 @@ public class TelaLogin extends javax.swing.JFrame {
 
         lblStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/infox/icones/database-error.png"))); // NOI18N
 
-        jPanel1.setBackground(new java.awt.Color(0, 191, 255));
+        jPanel1.setBackground(new java.awt.Color(160, 160, 160));
 
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setFont(new java.awt.Font("Fira Code Medium", 1, 18)); // NOI18N
@@ -322,20 +340,42 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_txtSenhaKeyPressed
 
     private void btnLoginMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseEntered
-        btnLogin.setBackground(new java.awt.Color(0, 191, 245));
+        btnLogin.setBackground(new java.awt.Color(160,160,160));
     }//GEN-LAST:event_btnLoginMouseEntered
 
     private void btnLoginMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseExited
         btnLogin.setBackground(null);
+        btnLogin.setForeground(null);
     }//GEN-LAST:event_btnLoginMouseExited
 
     private void btnCloseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseEntered
-        btnClose.setBackground(new java.awt.Color(230, 0, 0));
+        btnClose.setBackground(new java.awt.Color(255, 102, 102));
     }//GEN-LAST:event_btnCloseMouseEntered
 
     private void btnCloseMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseExited
         btnClose.setBackground(null);
+        btnClose.setForeground(null);
     }//GEN-LAST:event_btnCloseMouseExited
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        
+
+    }//GEN-LAST:event_formKeyPressed
+
+    private void formKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyReleased
+        System.out.println(evt.getKeyCode());
+        
+        if(evt.getKeyCode() == 13){
+            txtResultLogin.setText("");
+            txtResultSenha.setText("");
+        
+            logar();
+        }
+    }//GEN-LAST:event_formKeyReleased
+
+    private void formKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formKeyTyped
 
     public static void main(String args[]) {
 
