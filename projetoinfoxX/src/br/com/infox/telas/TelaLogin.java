@@ -47,12 +47,25 @@ public class TelaLogin extends javax.swing.JFrame {
             // se existir usuario e senha correspondente
             
             if(rs.next()){
+                // a linha abaixo obtem o conteudo do campo perfil da tbusuario
+                String perfil = rs.getString(6);
+                String user = rs.getString(2);
+                
                 TelaPrincipal principal = new TelaPrincipal();
-                
                 principal.setVisible(true);
+                TelaPrincipal.lblUsuario.setText(user);
                 
+                // a estrutura condicional abaixo faz o tratamento de perfil do usuario
+                
+                if(perfil.equals("admin")){
+                    TelaPrincipal.menRel.setEnabled(true);
+                    TelaPrincipal.menCadUsu.setEnabled(true);
+                }
+                else {
+                    TelaPrincipal.lblAdm.setVisible(false);
+                }
                 // Fechando a tela de login
-                this.dispose();
+                    this.dispose();
                 
                 // Fechando a conexao com o banco de dados
                 
@@ -241,7 +254,7 @@ public class TelaLogin extends javax.swing.JFrame {
 
         lblNotFound.setForeground(new java.awt.Color(255, 0, 0));
         lblNotFound.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblNotFound.setText("Esse usuário não existe");
+        lblNotFound.setText("Usuário ou senha inválido");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

@@ -262,7 +262,7 @@
           <Color blue="0" green="0" red="ff" type="rgb"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="Esse usu&#xe1;rio n&#xe3;o existe"/>
+        <Property name="text" type="java.lang.String" value="Usu&#xe1;rio ou senha inv&#xe1;lido"/>
       </Properties>
     </Component>
   </SubComponents>
