@@ -90,7 +90,77 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, e);
         }
     }
- 
+    private void alterar(){
+        String sql = "update tbusuarios set usuario=?, telefone=?, login=?, senha=?, perfil=? where iduser=?";
+        
+        try {
+            pst = conexao.prepareStatement(sql);
+            
+            pst.setString(1, txtUsuNome.getText());
+            pst.setString(2, txtUsuFone.getText());
+            pst.setString(3, txtUsuLogin.getText());
+            pst.setString(4, txtUsuSenha.getText());
+            pst.setString(5, cboUsuPerfil.getSelectedItem().toString());
+            pst.setString(6, txtUsuID.getText());
+            
+            if(txtUsuID.getText().isEmpty() || txtUsuNome.getText().isEmpty() || txtUsuLogin.getText().isEmpty() || txtUsuSenha.getText().isEmpty()){
+                JOptionPane.showMessageDialog(null, "Preencha todos os campos orbigátorios");
+            }
+            else {
+                // Se o resultado do update for 1, foi realizado com sucesso
+                int resultado = pst.executeUpdate();
+                
+                if(resultado > 0){
+                    JOptionPane.showMessageDialog(null, "Usuário alterado com sucesso");
+        
+                    txtUsuNome.setText(null);
+                    txtUsuID.setText(null);
+                    txtUsuFone.setText(null);
+                    txtUsuLogin.setText(null);
+                    txtUsuSenha.setText(null);
+                }
+            }
+           
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+    private void remover(){
+        int confirmar = JOptionPane.showConfirmDialog(null, "Tem certexa que deseja revover este usuário", "Atenção", JOptionPane.YES_NO_OPTION);
+        
+        if(txtUsuID.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Nenhum usuário foi selecionado");
+        }
+        else {
+            if(confirmar == JOptionPane.YES_OPTION){
+                String sql = "delete from tbusuarios where iduser=?";
+            
+                try {
+                    pst = conexao.prepareStatement(sql);
+                
+                    pst.setString(1, txtUsuID.getText());
+                
+                
+                
+                    int resultado = pst.executeUpdate();
+                
+                    if(resultado > 0){
+                        JOptionPane.showMessageDialog(null, "Usuário removido com sucesso");
+        
+                        txtUsuNome.setText(null);
+                        txtUsuID.setText(null);
+                        txtUsuFone.setText(null);
+                        txtUsuLogin.setText(null);
+                        txtUsuSenha.setText(null);
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, e);
+                }
+            }
+        }
+        
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -169,11 +239,21 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         btnUsoUpdate.setToolTipText("Alterar");
         btnUsoUpdate.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnUsoUpdate.setPreferredSize(new java.awt.Dimension(80, 80));
+        btnUsoUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUsoUpdateActionPerformed(evt);
+            }
+        });
 
         btnUsoDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/infox/icones/delete.png"))); // NOI18N
         btnUsoDelete.setToolTipText("Deletar");
         btnUsoDelete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnUsoDelete.setPreferredSize(new java.awt.Dimension(80, 80));
+        btnUsoDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUsoDeleteActionPerformed(evt);
+            }
+        });
 
         btnUserRead.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/infox/icones/read.png"))); // NOI18N
         btnUserRead.setToolTipText("Consultar");
@@ -325,6 +405,14 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         
       
     }//GEN-LAST:event_btnUsuCreateActionPerformed
+
+    private void btnUsoUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsoUpdateActionPerformed
+        alterar();
+    }//GEN-LAST:event_btnUsoUpdateActionPerformed
+
+    private void btnUsoDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsoDeleteActionPerformed
+        remover();
+    }//GEN-LAST:event_btnUsoDeleteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
