@@ -66,18 +66,25 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
             pst.setString(5, txtUsuSenha.getText());
             pst.setString(6, cboUsuPerfil.getSelectedItem().toString());
             
-            // Se o resultado do update for 1, foi realizado com sucesso
-            int resultado = pst.executeUpdate();
-            
-            if(resultado > 0){
-                JOptionPane.showMessageDialog(null, "Usuário criado com sucesso");
-        
-                txtUsuNome.setText("");
-                txtUsuID.setText("");
-                txtUsuFone.setText("");
-                txtUsuLogin.setText("");
-                txtUsuSenha.setText("");
+            if(txtUsuID.getText().isEmpty() || txtUsuNome.getText().isEmpty() || txtUsuLogin.getText().isEmpty() || txtUsuSenha.getText().isEmpty()){
+                JOptionPane.showMessageDialog(null, "Preencha todos os campos orbigátorios");
             }
+            else {
+                // Se o resultado do update for 1, foi realizado com sucesso
+                int resultado = pst.executeUpdate();
+                
+                if(resultado > 0){
+                    JOptionPane.showMessageDialog(null, "Usuário criado com sucesso");
+        
+                    txtUsuNome.setText(null);
+                    txtUsuID.setText(null);
+                    txtUsuFone.setText(null);
+                    txtUsuLogin.setText(null);
+                    txtUsuSenha.setText(null);
+                }
+            }
+            
+            
         } catch (Exception e) {
             
             JOptionPane.showMessageDialog(null, e);
@@ -109,6 +116,7 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         txtUsuID = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
 
         txtResNome1.setText("resNome");
 
@@ -122,13 +130,13 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         setTitle("Usuários");
         setPreferredSize(new java.awt.Dimension(635, 539));
 
-        jLabel1.setText("ID");
+        jLabel1.setText("ID*");
 
-        jLabel2.setText("Nome");
+        jLabel2.setText("Nome*");
 
-        jLabel3.setText("Login");
+        jLabel3.setText("Login*");
 
-        jLabel4.setText("Senha");
+        jLabel4.setText("Senha*");
 
         jLabel5.setText("Perfil");
 
@@ -190,6 +198,8 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
 
         jLabel7.setText("ADMIN");
 
+        jLabel9.setText("* Campos obrigátorios");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -244,13 +254,18 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
                                         .addComponent(cboUsuPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(295, 295, 295)
-                        .addComponent(jLabel7)))
-                .addContainerGap(56, Short.MAX_VALUE))
+                        .addComponent(jLabel7))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(258, 258, 258)
+                        .addComponent(jLabel9)))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(75, 75, 75)
+                .addContainerGap()
+                .addComponent(jLabel9)
+                .addGap(53, 53, 53)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtUsuNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -326,6 +341,7 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel txtResNome1;
     private javax.swing.JLabel txtResNome2;
     private javax.swing.JTextField txtUsuFone;
