@@ -4,6 +4,10 @@ import java.sql.*;
 import br.com.infox.dal.ModuloConexao;
 import javax.swing.JOptionPane;
 
+// a linha abaixo importa recurso da biblioteca rs2xml.jar
+
+import net.proteanit.sql.DbUtils;
+
 public class TelaCliente extends javax.swing.JInternalFrame {
 
     Connection conexao = null;
@@ -49,7 +53,36 @@ public class TelaCliente extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, e);
         }
     }
-
+    private void pesquisar(){
+        
+        
+        String sql = "select * from tbclientes where nomecliente like ?";
+        
+        try {
+            pst = conexao.prepareStatement(sql);
+            //Atenção ao '%' que é a continuação da String
+            pst.setString(1, txtPesquisar.getText() + "%");
+            
+            rs = pst.executeQuery();
+            
+            if(rs.next()){
+                // a linha abaixo usa a biblioteca rs2xml.jar para preencher a tabela
+                
+                tblClientes.setModel(DbUtils.resultSetToTableModel(rs));
+            }
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+    private void preencherCampos(){
+        int pos = tblClientes.getSelectedRow();
+        
+        txtCliNome.setText(tblClientes.getModel().getValueAt(pos, 1).toString());
+        txtCliEndereco.setText(tblClientes.getModel().getValueAt(pos, 2).toString());
+        txtCliFone.setText(tblClientes.getModel().getValueAt(pos, 3).toString());
+        txtCliEmail.setText(tblClientes.getModel().getValueAt(pos, 4).toString());
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -74,6 +107,12 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         tblClientes = new javax.swing.JTable();
 
         jTextField1.setText("jTextField1");
+
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
+        setTitle("Clientes");
 
         txtCliFone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -112,6 +151,15 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         btnAlterar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAlterar.setPreferredSize(new java.awt.Dimension(80, 80));
 
+        txtPesquisar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtPesquisarKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPesquisarKeyReleased(evt);
+            }
+        });
+
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/infox/icones/pesquisar.png"))); // NOI18N
 
         tblClientes.setModel(new javax.swing.table.DefaultTableModel(
@@ -122,9 +170,14 @@ public class TelaCliente extends javax.swing.JInternalFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Nome", "Endereço", "Telefone", "E-mail"
             }
         ));
+        tblClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblClientesMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblClientes);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -217,6 +270,23 @@ public class TelaCliente extends javax.swing.JInternalFrame {
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
        adicionar();
     }//GEN-LAST:event_btnAdicionarActionPerformed
+
+    private void txtPesquisarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisarKeyPressed
+        pesquisar();
+    }//GEN-LAST:event_txtPesquisarKeyPressed
+
+    private void txtPesquisarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisarKeyReleased
+        txtCliNome.setText(null);
+        txtCliEndereco.setText(null);
+        txtCliFone.setText(null);
+        txtCliEmail.setText(null);
+        
+        preencherCampos();
+    }//GEN-LAST:event_txtPesquisarKeyReleased
+
+    private void tblClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClientesMouseClicked
+       
+    }//GEN-LAST:event_tblClientesMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
