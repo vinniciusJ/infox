@@ -31,7 +31,7 @@ public class TelaCliente extends javax.swing.JInternalFrame {
           
             
             if(txtCliNome.getText().isEmpty() || txtCliFone.getText().isEmpty() || txtCliEmail.getText().isEmpty()){
-                JOptionPane.showMessageDialog(null, "Preencha todos os campos orbigátorios");
+                JOptionPane.showMessageDialog(null, "Preencha todos os campos obrigátorios");
             }
             else {
                 // Se o resultado do update for 1, foi realizado com sucesso
@@ -61,9 +61,10 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         try {
             pst = conexao.prepareStatement(sql);
             //Atenção ao '%' que é a continuação da String
-            pst.setString(1, txtPesquisar.getText() + "%");
+            pst.setString(1, (txtPesquisar.getText() + "%"));
             
             rs = pst.executeQuery();
+            
             
             if(rs.next()){
                 // a linha abaixo usa a biblioteca rs2xml.jar para preencher a tabela
@@ -77,6 +78,8 @@ public class TelaCliente extends javax.swing.JInternalFrame {
     }
     private void preencherCampos(){
         int pos = tblClientes.getSelectedRow();
+        
+        btnAdicionar.setEnabled(false);
         
         txtCliID.setText(tblClientes.getModel().getValueAt(pos, 0).toString());
         txtCliNome.setText(tblClientes.getModel().getValueAt(pos, 1).toString());
@@ -105,19 +108,53 @@ public class TelaCliente extends javax.swing.JInternalFrame {
                 int resultado = pst.executeUpdate();
                 
                 if(resultado > 0){
-                    JOptionPane.showMessageDialog(null, "Usuário alterado com sucesso");
+                    JOptionPane.showMessageDialog(null, "Dados do cliente alterados com sucesso");
         
                     txtCliNome.setText(null);
                     txtCliEndereco.setText(null);
                     txtCliFone.setText(null);
                     txtCliEmail.setText(null);
                     txtCliID.setText(null);
+                     btnAdicionar.setEnabled(true);
                 }
             }
            
             
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
+        }
+    }
+    private void remover(){
+        int confirmar = JOptionPane.showConfirmDialog(null, "Tem certexa que deseja revover este cliente", "Atenção", JOptionPane.YES_NO_OPTION);
+        
+        if(confirmar == JOptionPane.YES_OPTION){
+            if(txtCliID.getText().isEmpty()){
+                JOptionPane.showMessageDialog(null, "Nenhum cliente foi selecionado");
+            }
+            else {
+            
+                String sql = "delete from tbclientes where idcliente=?";
+            
+                try {
+                    pst = conexao.prepareStatement(sql);
+                
+                    pst.setString(1, txtCliID.getText());
+                
+                    int resultado = pst.executeUpdate();
+                
+                    if(resultado > 0){
+                        JOptionPane.showMessageDialog(null, "Cliente removido com sucesso");
+        
+                        txtCliNome.setText(null);
+                        txtCliID.setText(null);
+                        txtCliEndereco.setText(null);
+                        txtCliFone.setText(null);
+                        txtCliEmail.setText(null);
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, e);
+                }
+            }
         }
     }
     
@@ -184,6 +221,11 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         btnRemover.setToolTipText("Remover");
         btnRemover.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnRemover.setPreferredSize(new java.awt.Dimension(80, 80));
+        btnRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoverActionPerformed(evt);
+            }
+        });
 
         btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/infox/icones/update.png"))); // NOI18N
         btnAlterar.setToolTipText("Alterar");
@@ -208,13 +250,13 @@ public class TelaCliente extends javax.swing.JInternalFrame {
 
         tblClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Nome", "Endereço", "Telefone", "E-mail"
+
             }
         ));
         tblClientes.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -327,15 +369,16 @@ public class TelaCliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void txtPesquisarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisarKeyPressed
+
+    }//GEN-LAST:event_txtPesquisarKeyPressed
+
+    private void txtPesquisarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisarKeyReleased
         txtCliNome.setText(null);
         txtCliEndereco.setText(null);
         txtCliFone.setText(null);
         txtCliEmail.setText(null);
+        txtCliID.setText(null);
         pesquisar();
-    }//GEN-LAST:event_txtPesquisarKeyPressed
-
-    private void txtPesquisarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisarKeyReleased
-        
     }//GEN-LAST:event_txtPesquisarKeyReleased
 
     private void tblClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClientesMouseClicked
@@ -345,6 +388,11 @@ public class TelaCliente extends javax.swing.JInternalFrame {
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         alterar();
     }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
+        remover();
+        btnAdicionar.setEnabled(true);
+    }//GEN-LAST:event_btnRemoverActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
