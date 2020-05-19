@@ -56,7 +56,7 @@ public class TelaCliente extends javax.swing.JInternalFrame {
     private void pesquisar(){
         
         
-        String sql = "select * from tbclientes where nomecliente like ?";
+        String sql = "select idcliente as ID, nomecliente as Nome, enderecocliente as Endereço, telefonecliente as Telefone, email as Email from tbclientes where nomecliente like ?";
         
         try {
             pst = conexao.prepareStatement(sql);
@@ -65,12 +65,9 @@ public class TelaCliente extends javax.swing.JInternalFrame {
             
             rs = pst.executeQuery();
             
-            
-            if(rs.next()){
-                // a linha abaixo usa a biblioteca rs2xml.jar para preencher a tabela
-                
-                tblClientes.setModel(DbUtils.resultSetToTableModel(rs));
-            }
+        
+            tblClientes.setModel(DbUtils.resultSetToTableModel(rs));
+          
             
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
