@@ -30,7 +30,7 @@ public class TelaLogin extends javax.swing.JFrame {
                     txtResultLogin.setText("Por favor insira o usuário");
                 }
                 else {
-                    txtResultSenha.setText("Por favor insira o usuário");
+                    txtResultSenha.setText("Por favor insira a senha");
                 }
                 
                 return;
