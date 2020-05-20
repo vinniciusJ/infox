@@ -173,6 +173,14 @@ public class TelaLogin extends javax.swing.JFrame {
                 btnLoginActionPerformed(evt);
             }
         });
+        btnLogin.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnLoginKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                btnLoginKeyReleased(evt);
+            }
+        });
 
         txtSenha.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -239,6 +247,11 @@ public class TelaLogin extends javax.swing.JFrame {
         btnClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCloseActionPerformed(evt);
+            }
+        });
+        btnClose.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                btnCloseKeyReleased(evt);
             }
         });
 
@@ -376,19 +389,31 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_formKeyPressed
 
     private void formKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyReleased
-        System.out.println(evt.getKeyCode());
-        
-        if(evt.getKeyCode() == 13){
-            txtResultLogin.setText("");
-            txtResultSenha.setText("");
-        
-            logar();
-        }
+         
     }//GEN-LAST:event_formKeyReleased
 
     private void formKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyTyped
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_formKeyTyped
+
+    private void btnLoginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnLoginKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLoginKeyPressed
+
+    private void btnLoginKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnLoginKeyReleased
+        if(evt.getKeyCode() == evt.VK_ENTER){
+            
+            logar();
+        }
+        
+    }//GEN-LAST:event_btnLoginKeyReleased
+
+    private void btnCloseKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCloseKeyReleased
+        if(evt.getKeyCode() == evt.VK_ENTER){
+            
+            System.exit(0);
+        }
+    }//GEN-LAST:event_btnCloseKeyReleased
 
     public static void main(String args[]) {
 
