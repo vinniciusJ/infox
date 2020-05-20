@@ -173,6 +173,41 @@ public class TelaOS extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, e);
         }
     }
+    private void excluirOS(){
+        int confirma = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja exluir esta Ordem de serviço?", "Atenção", JOptionPane.YES_NO_OPTION);
+        
+        if(confirma == JOptionPane.YES_OPTION){
+            String sql = "delete from tbos where os=?";
+            
+            try {
+                pst = conexao.prepareStatement(sql);
+                pst.setString(1, txtOS.getText());
+                
+                int status = pst.executeUpdate();
+                
+                if(status > 0){
+                    JOptionPane.showMessageDialog(null, "Ordem de serviço removida com sucesso");
+                    
+                    txtOS.setText(null);
+                    txtData.setText(null);
+                    txtOSEquip.setText(null);
+                    txtOSDef.setText(null);
+                    txtOSServ.setText(null);
+                    txtOSTec.setText(null);
+                    txtOSValor.setText(null);
+                    txtCliID.setText(null);
+                    txtCliPesquisar.setText(null);
+                    
+                    btnOSAdicionar.setEnabled(true);
+                    txtCliPesquisar.setEnabled(true);
+                    tblClientes.setVisible(true);
+                }
+                
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -434,6 +469,11 @@ public class TelaOS extends javax.swing.JInternalFrame {
         btnOSExcluir.setToolTipText("Remover");
         btnOSExcluir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnOSExcluir.setPreferredSize(new java.awt.Dimension(80, 80));
+        btnOSExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOSExcluirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -574,8 +614,11 @@ public class TelaOS extends javax.swing.JInternalFrame {
 
     private void btnOSAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOSAlterarActionPerformed
         alterarOS();
-        
     }//GEN-LAST:event_btnOSAlterarActionPerformed
+
+    private void btnOSExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOSExcluirActionPerformed
+        excluirOS();
+    }//GEN-LAST:event_btnOSExcluirActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
