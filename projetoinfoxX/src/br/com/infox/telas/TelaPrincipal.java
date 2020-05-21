@@ -164,6 +164,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         menRelSer.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_MASK));
         menRelSer.setText("Serviços");
+        menRelSer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menRelSerActionPerformed(evt);
+            }
+        });
         menRel.add(menRelSer);
 
         menu.add(menRel);
@@ -300,6 +305,24 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_menRelCliActionPerformed
+
+    private void menRelSerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menRelSerActionPerformed
+        int status = JOptionPane.showConfirmDialog(null, "Confirma a impressão desse relátorio?", "Atenção", JOptionPane.YES_NO_OPTION);
+        
+        if(status == JOptionPane.YES_OPTION){
+            // imprimindo relátorio com o framework JasperReports
+            
+            try {
+                // Usando JasperPrint
+                JasperPrint print = JasperFillManager.fillReport("C:\\Users\\Vinicius Jimenez\\Projetos\\Java\\my-sql-java\\reports\\Servicos.jasper", null, conexao);
+                // a linha abaixo exibe o relatorio atraves da classe JasperViewer
+                JasperViewer.viewReport(print, false);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+                
+        }
+    }//GEN-LAST:event_menRelSerActionPerformed
 
     
     public static void main(String args[]) {
